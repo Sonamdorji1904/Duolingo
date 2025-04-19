@@ -1,5 +1,5 @@
 import Sidebar from "@/components/Sidebar";
-import MainContent from "@/components/MainContent";
+import MainContent from "@/components/mainlayout/MainContent";
 import RightSidebar from "@/components/RightSidebar";
 
 export default function Home() {
