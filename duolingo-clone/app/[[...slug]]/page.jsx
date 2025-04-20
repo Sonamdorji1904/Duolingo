@@ -20,13 +20,16 @@ export default function DynamicPage() {
     }
   );
 
+  // Hide sidebars for profile page
+  const isProfilePage = currentPage === "profile";
+
   return (
     <main className="flex min-h-screen font-sans bg-white">
-      <Sidebar />
+      {!isProfilePage && <Sidebar />}
       <div className="flex-1">
         <PageComponent />
       </div>
-      <RightSidebar />
+      {!isProfilePage && <RightSidebar />}
     </main>
   );
 }
