@@ -6,11 +6,59 @@ import { Eye, EyeOff, X } from 'lucide-react';
 
 export default function CreateProfilePage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [age, setAge] = useState('');
+  const [name, setName] = useState('');
   const router = useRouter();
+  const [validationErrors, setValidationErrors] = useState({});
+
+
+  const handleSignup = async () => {
+    const errors = {};
+  
+    if (!age || isNaN(Number(age)) || Number(age) < 13) {
+      errors.age = 'Please enter your real age';
+    }
+  
+    if (!email || !email.includes('@')) {
+      errors.email = 'Invalid email address';
+    }
+  
+    if (!password || password.length < 6) {
+      errors.password = 'Password too short';
+    }
+  
+    setValidationErrors(errors);
+  
+    if (Object.keys(errors).length > 0) return; // Stop here if there are errors
+  
+    try {
+      const res = await fetch('http://localhost:5000/api/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          password,
+          age: Number(age),
+          name, // optional
+        }),
+      });
+  
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+  
+      alert('Signup successful! You can now login.');
+      router.push('/learn');
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+  
+  
 
   return (
     <div className="relative flex min-h-screen justify-center items-center bg-white font-sans">
-      {/* Top Left Close Button */}
       <button
         onClick={() => router.push('/learn')}
         className="absolute top-4 left-4 text-gray-400 hover:text-gray-600"
@@ -18,12 +66,10 @@ export default function CreateProfilePage() {
         <X size={28} />
       </button>
 
-      {/* Top Right Login Button */}
       <button className="absolute top-4 right-4 border border-gray-300 px-4 py-1 rounded-full text-sm font-bold text-blue-500 hover:bg-gray-100">
         LOGIN
       </button>
 
-      {/* Main Form */}
       <div className="w-full max-w-sm px-6">
         <h1 className="text-2xl font-bold text-center mb-6">
           Create your profile
@@ -32,8 +78,16 @@ export default function CreateProfilePage() {
         <input
           type="text"
           placeholder="Age"
-          className="w-full bg-gray-100 border border-gray-300 rounded-xl p-3 mb-1 placeholder-gray-500"
+          value={age}
+          onChange={(e) => setAge(e.target.value)}
+          className={`w-full bg-gray-100 border ${validationErrors.age ? 'border-red-500' : 'border-gray-300'} rounded-xl p-3 mb-1 placeholder-gray-500`}
         />
+        {validationErrors.age && (
+          <p className="text-xs text-red-500 mb-4 flex items-center gap-1">
+            <img src="mark.png" alt="" width={22} height={22}/>{validationErrors.age}
+          </p>
+        )}
+
         <p className="text-xs text-gray-500 mb-4 leading-snug">
           Providing your age ensures you get the right Duolingo experience. For
           more details, please visit our{' '}
@@ -45,21 +99,31 @@ export default function CreateProfilePage() {
         <input
           type="text"
           placeholder="Name (optional)"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           className="w-full bg-gray-100 border border-gray-300 rounded-xl p-3 mb-4 placeholder-gray-500"
         />
 
         <input
           type="email"
           placeholder="Email"
-          className="w-full bg-gray-100 border border-gray-300 rounded-xl p-3 mb-4 placeholder-gray-500"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className={`w-full bg-gray-100 border ${validationErrors.email ? 'border-red-500' : 'border-gray-300'} rounded-xl p-3 mb-1 placeholder-gray-500`}
         />
+        {validationErrors.email && (
+          <p className="text-xs text-red-500 mb-4 flex items-center gap-1">
+            <img src="mark.png" alt="" width={22} height={22}/>{validationErrors.email}
+          </p>
+        )}
 
-        {/* Password Input */}
-        <div className="relative mb-6">
+        <div className="relative mb-1">
           <input
             type={showPassword ? 'text' : 'password'}
             placeholder="Password"
-            className="w-full bg-gray-100 border border-gray-300 rounded-xl p-3 pr-10 placeholder-gray-500"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className={`w-full bg-gray-100 border ${validationErrors.password ? 'border-red-500' : 'border-gray-300'} rounded-xl p-3 pr-10 placeholder-gray-500`}
           />
           <button
             type="button"
@@ -69,8 +133,17 @@ export default function CreateProfilePage() {
             {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
           </button>
         </div>
+        {validationErrors.password && (
+          <p className="text-xs text-red-500 mb-4 flex items-center gap-1">
+            <img src="mark.png" alt="" width={22} height={22}/>{validationErrors.password}
+          </p>
+        )}
 
-        <button className="w-full bg-[#1cb0f6] hover:bg-[#1299d6] text-white font-bold rounded-xl py-3 mb-4">
+
+        <button
+          onClick={handleSignup}
+          className="w-full bg-[#1cb0f6] hover:bg-[#1299d6] text-white font-bold rounded-xl py-3 mb-4"
+        >
           CREATE ACCOUNT
         </button>
 
