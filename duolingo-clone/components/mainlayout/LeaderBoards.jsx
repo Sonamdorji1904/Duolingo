@@ -4,7 +4,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-export default function Leaderboard() {
+export default function Leaderboard() {0
   const router = useRouter();
 
   const handleStartLesson = () => {
