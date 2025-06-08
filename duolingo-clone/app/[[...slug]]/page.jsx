@@ -16,20 +16,20 @@ export default function DynamicPage() {
     import(`@/components/mainlayout/${capitalize(currentPage)}.jsx`).catch(() =>
       import("@/components/mainlayout/Learn.jsx") // fallback
     ), {
-      ssr: false,
-    }
+    ssr: false,
+  }
   );
 
-  // Hide sidebars for profile page
-  const isProfilePage = currentPage === "profile";
+  // Hide sidebars for profile and login pages
+  const isProfileOrLoginPage = currentPage === "profile" || currentPage === "login";
 
   return (
-    <main className={`flex min-h-screen font-sans bg-white ${!isProfilePage ? 'ml-60' : ''}`}>
-      {!isProfilePage && <Sidebar />}
+    <main className={`flex min-h-screen font-sans bg-white ${!isProfileOrLoginPage ? 'ml-60' : ''}`}>
+      {!isProfileOrLoginPage && <Sidebar />}
       <div className="flex-1">
         <PageComponent />
       </div>
-      {!isProfilePage && <RightSidebar />}
+      {!isProfileOrLoginPage && <RightSidebar />}
     </main>
 
   );
