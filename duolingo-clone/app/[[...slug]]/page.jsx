@@ -24,13 +24,14 @@ export default function DynamicPage() {
   const isProfilePage = currentPage === "profile";
 
   return (
-    <main className="flex min-h-screen font-sans bg-white">
+    <main className={`flex min-h-screen font-sans bg-white ${!isProfilePage ? 'ml-60' : ''}`}>
       {!isProfilePage && <Sidebar />}
       <div className="flex-1">
         <PageComponent />
       </div>
       {!isProfilePage && <RightSidebar />}
     </main>
+
   );
 }
 

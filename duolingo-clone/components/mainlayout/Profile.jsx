@@ -16,7 +16,7 @@ export default function CreateProfilePage() {
 
   const handleSignup = async () => {
     const errors = {};
-
+    
     if (!age || isNaN(Number(age)) || Number(age) < 13) {
       errors.age = 'Please enter your real age';
     }
@@ -32,7 +32,7 @@ export default function CreateProfilePage() {
     setValidationErrors(errors);
 
     if (Object.keys(errors).length > 0) return; // Stop here if there are errors
-
+  
     try {
       const res = await fetch('http://localhost:5000/api/signup', {
         method: 'POST',
@@ -60,8 +60,8 @@ export default function CreateProfilePage() {
     }
   };
 
-
-
+  
+  
   return (
     <div className="relative flex min-h-screen justify-center items-center bg-white font-sans">
       <button
@@ -92,7 +92,7 @@ export default function CreateProfilePage() {
         />
         {validationErrors.age && (
           <p className="text-xs text-red-500 mb-4 flex items-center gap-1">
-            <img src="mark.png" alt="" width={22} height={22} />{validationErrors.age}
+            <img src="mark.png" alt="" width={28} height={28} />{validationErrors.age}
           </p>
         )}
 
