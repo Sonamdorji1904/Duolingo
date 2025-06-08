@@ -16,21 +16,21 @@ export default function CreateProfilePage() {
 
   const handleSignup = async () => {
     const errors = {};
-  
+    
     if (!age || isNaN(Number(age)) || Number(age) < 13) {
       errors.age = 'Please enter your real age';
     }
-  
+
     if (!email || !email.includes('@')) {
       errors.email = 'Invalid email address';
     }
-  
+
     if (!password || password.length < 6) {
       errors.password = 'Password too short';
     }
-  
+
     setValidationErrors(errors);
-  
+
     if (Object.keys(errors).length > 0) return; // Stop here if there are errors
   
     try {
@@ -44,19 +44,24 @@ export default function CreateProfilePage() {
           name, // optional
         }),
       });
-  
+
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
-  
+
       alert('Signup successful! You can now login.');
-      router.push('/learn');
+      setEmail('');
+      setPassword('');
+      setAge('');
+      setName('');
+      setValidationErrors({});
+      // router.push('/learn');
     } catch (err) {
       alert(err.message);
     }
   };
-  
-  
 
+  
+  
   return (
     <div className="relative flex min-h-screen justify-center items-center bg-white font-sans">
       <button
@@ -66,7 +71,10 @@ export default function CreateProfilePage() {
         <X size={28} />
       </button>
 
-      <button className="absolute top-4 right-4 border border-gray-300 px-4 py-1 rounded-full text-sm font-bold text-blue-500 hover:bg-gray-100">
+      <button
+        className="absolute top-4 right-4 border border-gray-300 px-4 py-1 rounded-full text-sm font-bold text-blue-500 hover:bg-gray-100"
+        onClick={() => router.push('/login')}
+      >
         LOGIN
       </button>
 
@@ -84,7 +92,7 @@ export default function CreateProfilePage() {
         />
         {validationErrors.age && (
           <p className="text-xs text-red-500 mb-4 flex items-center gap-1">
-            <img src="mark.png" alt="" width={22} height={22}/>{validationErrors.age}
+            <img src="mark.png" alt="" width={28} height={28} />{validationErrors.age}
           </p>
         )}
 
@@ -113,7 +121,7 @@ export default function CreateProfilePage() {
         />
         {validationErrors.email && (
           <p className="text-xs text-red-500 mb-4 flex items-center gap-1">
-            <img src="mark.png" alt="" width={22} height={22}/>{validationErrors.email}
+            <img src="mark.png" alt="" width={22} height={22} />{validationErrors.email}
           </p>
         )}
 
@@ -135,7 +143,7 @@ export default function CreateProfilePage() {
         </div>
         {validationErrors.password && (
           <p className="text-xs text-red-500 mb-4 flex items-center gap-1">
-            <img src="mark.png" alt="" width={22} height={22}/>{validationErrors.password}
+            <img src="mark.png" alt="" width={22} height={22} />{validationErrors.password}
           </p>
         )}
 

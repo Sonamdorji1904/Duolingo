@@ -32,17 +32,10 @@ export default function MainContent() {
                 {/* Unlimited Hearts */}
                 <div className="flex items-center justify-between px-2 pb-4">
           <div className="flex items-center gap-4">
-            <Image
-              src="https://d35aaqx5ub95lt.cloudfront.net/images/hearts/4f3842c690acf9bf0d4b06e6ab2fffcf.svg"
-              alt="Unlimited Hearts"
-              width={60}
-              height={60}
-            />
+            <Image src="https://d35aaqx5ub95lt.cloudfront.net/images/hearts/4f3842c690acf9bf0d4b06e6ab2fffcf.svg" alt="Unlimited Hearts" width={60} height={60} />
             <div>
               <p className="font-bold text-lg">Unlimited Hearts</p>
-              <p className="text-gray-500 text-sm">
-              Never run out of hearts with Super!
-              </p>
+              <p className="text-gray-500 text-sm">Never run out of hearts with Super!</p>
             </div>
           </div>
           <button className="w-28 border border-gray-300 text-[#a259ff] font-semibold px-4 py-2 rounded-full hover:bg-gray-100 transition text-sm text-center">
@@ -54,8 +47,6 @@ export default function MainContent() {
 
         {/* Power-ups Section Title */}
         <h2 className="text-lg font-bold mb-4">Power-ups</h2>
-
-        {/* Streak Freeze */}
         <div className="flex items-center justify-between px-2 pb-4">
           <div className="flex items-center gap-4">
             <Image
