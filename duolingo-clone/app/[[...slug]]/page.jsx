@@ -11,14 +11,23 @@ export default function DynamicPage() {
   // Get route name (e.g., "learn", "shop")
   const currentPage = pathname.split("/")[1] || "learn";
 
-  // Capitalize to match filename (e.g., Learn.jsx)
+  // Map route names to component filenames for case-sensitive imports
+  const fileMap = {
+    leaderboards: "LeaderBoards",
+    profile: "Profile",
+    login: "Login",
+    learn: "Learn",
+    shop: "Shop",
+    // add more mappings as needed
+  };
+  const fileName = fileMap[currentPage] || capitalize(currentPage);
+
   const PageComponent = dynamic(() =>
-    import(`@/components/mainlayout/${capitalize(currentPage)}.jsx`).catch(() =>
-      import("@/components/mainlayout/Learn.jsx") // fallback
+    import(`@/components/mainlayout/${fileName}.jsx`).catch(() =>
+      import("@/components/mainlayout/Learn.jsx")
     ), {
     ssr: false,
-  }
-  );
+  });
 
   // Hide sidebars for profile and login pages
   const isProfileOrLoginPage = currentPage === "profile" || currentPage === "login";
@@ -31,7 +40,6 @@ export default function DynamicPage() {
       </div>
       {!isProfileOrLoginPage && <RightSidebar />}
     </main>
-
   );
 }
 
