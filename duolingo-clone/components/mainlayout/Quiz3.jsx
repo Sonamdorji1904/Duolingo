@@ -9,7 +9,7 @@ const options = [
         img: 'https://cdn-icons-png.flaticon.com/512/616/616408.png', // apple
     },
     {
-        img: 'https://cdn-icons-png.flaticon.com/512/616/616490.png', // orange
+        img: 'rabbit.png', // orange
     },
     {
         img: 'https://cdn-icons-png.flaticon.com/512/616/616430.png', // banana
@@ -71,7 +71,7 @@ export default function Quiz3() {
                     NEW VOCABULARY
                 </div>
                 <h2 className="text-2xl font-extrabold text-gray-800 mb-8 text-center">
-                    Which one is <span className="font-bold">"Orange"</span>?
+                    Which one is <span className="font-bold">"Cat"</span>?
                 </h2>
                 <div className="flex gap-6 w-full justify-center mb-10">
                     {options.map((opt, idx) => (
