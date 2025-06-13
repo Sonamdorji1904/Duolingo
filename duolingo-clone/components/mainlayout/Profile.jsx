@@ -211,7 +211,7 @@ export default function CreateProfilePage() {
           <h2 className="text-2xl font-bold mb-1">{user.user_metadata?.name || user.email}</h2>
           <div className="text-gray-500 text-sm mb-2">{user.email}</div>
           <div className="text-gray-400 text-xs mb-4">
-            Joined {new Date(user.created_at).toLocaleString('default', { month: 'long', year: 'numeric' })}
+            Joined {new Date(user.created_at).toLocaleString('default', { day: 'numeric', month: 'long', year: 'numeric' })}
           </div>
           <div className="flex gap-8 mb-4">
             <div className="text-center">
