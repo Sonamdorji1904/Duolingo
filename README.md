@@ -1,28 +1,50 @@
-# 🦉 Duolingo Clone Web App
+# Duolingo Clone
 
-Welcome to the Duolingo Clone — a fully responsive language learning web application inspired by the Duolingo UI. Built using **Next.js (App Router)** and **Tailwind CSS**, this project focuses on replicating the core layout and navigation experience of Duolingo.
-
----
-
-## ✨ Features
-
-### ✅ Core Functionality
-- **Dynamic Routing** using Next.js App Router for every section (`learn`, `leaderboard`, `shop`, etc.)
-- **Sidebar Navigation** with routes that correspond to individual pages
-- **Dummy Authentication** — allows users to "log in" using email and password (no real backend yet)
-- **Right Sidebar** — added recently to reflect Duolingo’s leaderboard/activity/sidebar components
-- **Fixed Sidebar** — main sidebar remains fixed during scroll for improved UX
-- **Responsive UI** — optimized for different screen sizes using Tailwind CSS
+A full-stack Duolingo-inspired language learning app built with **Next.js (App Router)**, **Supabase Auth**, and **Tailwind CSS**.
 
 ---
 
-## 🧱 Tech Stack
+## 🚀 Getting Started
 
-- **Framework:** [Next.js 14+](https://nextjs.org/)
-- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
-- **Routing:** App Router with Dynamic Route Matching
-- **Icons:** [Lucide React](https://lucide.dev/)
-- **Authentication (Mock):** Custom hook for dummy login (for now)
+### 1. **Clone the Repository**
+
+```bash
+git clone https://github.com/Sonamdorji1904/Duolingo.git
+cd Duolingo
+```
+
+### 2. **Install Dependencies**
+
+```bash
+npm install
+# or
+yarn install
+```
+
+### 3. **Set Up Environment Variables**
+
+Copy `.env.local.example` to `.env.local` and fill in your Supabase credentials:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+```
+
+### 4. **Configure Supabase**
+
+- Go to [Supabase](https://app.supabase.com/) and create a new project.
+- Enable **Email/Password** and **Google** authentication providers in the **Authentication > Providers** section.
+- Set your **Site URL** (e.g., `http://localhost:3000`) and add `http://localhost:3000/reset-password` to **Redirect URLs** in **Authentication > URL Configuration**.
+
+### 5. **Run the Development Server**
+
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
@@ -30,84 +52,62 @@ Welcome to the Duolingo Clone — a fully responsive language learning web appli
 
 ```
 duolingo-clone/
-├── app/
+├── app/                  # Next.js App Router pages
+│   ├── [[...slug]]/      # Dynamic routing for main content
+│   ├── reset-password/   # Password reset page
 │   ├── layout.js         # Root layout
-│   ├── page.jsx          # Home route
-│   ├── globals.css
-│   └── [[...slug]]/      # Dynamic pages like /learn, /shop, /leaderboard
-│       └── page.jsx
+│   └── globals.css       # Global styles
 ├── components/
-│   ├── Sidebar.jsx       # Left sidebar
-│   ├── RightSidebar.jsx  # Right sidebar
-│   └── mainlayout/       # Individual page UIs
-│       ├── Learn.jsx
-│       ├── Leaderboard.jsx
-│       ├── Shop.jsx
-│       └── ...
-├── public/
-└── ...
+│   ├── mainlayout/       # Main UI components (Profile, Login, Quizzes, etc.)
+│   ├── Sidebar.jsx       # Sidebar navigation
+│   └── RightSidebar.jsx  # Right sidebar
+├── lib/
+│   ├── supabaseClient.js # Supabase client setup
+│   └── axios.js          # Axios instance for API calls
+├── public/               # Static assets (images, icons)
+├── .env.local            # Environment variables
+├── package.json
+└── README.md
 ```
 
 ---
 
-## 🚀 Getting Started
+## ✨ Features
 
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/Sonamdorji1904/Duolingo.git
-cd Duolingo
-```
-
-### 2. Install dependencies
-
-```bash
-npm install
-```
-
-### 3. Run the development server
-
-```bash
-npm run dev
-```
-
-Then open [http://localhost:3000](http://localhost:3000) in your browser.
+- **User Authentication:** Email/password and Google OAuth via Supabase.
+- **Profile Management:** Create and edit user profiles with display name and avatar.
+- **Password Reset:** Secure password reset flow with custom `/reset-password` page.
+- **Sidebar Navigation:** Responsive sidebar with dropdown and conditional options.
+- **Quizzes & Lessons:** Interactive quizzes for language learning.
+- **Leaderboards:** Track user progress and compare with others.
+- **Shop:** Buy power-ups and streak freezes.
+- **Friends & Social:** Following/followers tabs, add/invite friends.
+- **Daily Quests:** Gamified daily challenges.
 
 ---
 
-## 🔐 Dummy Authentication
+## 🔮 Future Scope
 
-- Navigate to `/profile`
-- Enter any email and password
-- The form uses `useState` and client-side validation
-
----
-
-## 📦 Pages Implemented
-
-- `/learn`
-- `/leaderboard`
-- `/shop`
-- `/profile`
-- `/quests`
-- `/letters`
-- (more can be added easily in `components/mainlayout`)
+- **Multi-language Support:** Add more languages and lessons.
+- **Real-time Leaderboards:** Live updates using Supabase Realtime.
+- **Achievements & Badges:** Reward system for milestones.
+- **Social Feed:** Activity feed for friends.
+- **Push Notifications:** Reminders for daily streaks and quests.
+- **Admin Dashboard:** Manage content and users.
+- **API Integration:** Connect with external dictionary or translation APIs.
+- **Accessibility Improvements:** Enhanced support for screen readers and keyboard navigation.
 
 ---
 
-## 🛠 To-Do (Future Enhancements)
+## 📝 License
 
-- 🔒 Add real backend auth (Firebase, Supabase, or custom API)
-- 🧠 Add lesson data and interactive exercises
-- 🌍 Multi-language support
+MIT
 
 ---
-
 
 ## 👨‍💻 Author
 
 - **Sonam Dorji**
 - **Jigden Shakya**
-- GitHub: [Sonamdorji1904](https://github.com/Sonamdorji1904/Duolingo.git)
-
----
+- GitHub: [Sonamdorji1904-Frontend](https://github.com/Sonamdorji1904/Duolingo.git)
+- GitHub: [Jigden18-Backend](https://github.com/Jigden18/Duolingo_Backend.git)
