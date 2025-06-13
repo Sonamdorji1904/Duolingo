@@ -42,7 +42,7 @@ export default function MainContent() {
     <section className="flex-1 p-6 bg-white overflow-y-auto">
       {/* Green Header */}
       <div className="bg-[#58cc02] text-white p-4 rounded-xl mb-8 flex flex-col items-start gap-1">
-        <span className="text-sm font-bold">← SECTION 1, UNIT 1</span>
+        <span className="text-sm font-bold">SECTION 1, UNIT 1</span>
         <span className="text-xl font-bold">Learn Korean vowels</span>
       </div>
 
