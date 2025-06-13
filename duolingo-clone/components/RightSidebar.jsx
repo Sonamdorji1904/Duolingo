@@ -73,10 +73,16 @@ export default function RightSidebar() {
       {/* Create Profile */}
       <div className="border rounded-xl p-4 shadow-sm text-center space-y-4">
         <h3 className="text-md font-semibold">Create a profile to save your progress!</h3>
-        <button className="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-xl font-bold shadow-md border-none">
+        <button
+          className="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-xl font-bold shadow-md border-none"
+          onClick={() => window.location.href = '/profile'}
+        >
           CREATE A PROFILE
         </button>
-        <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-xl font-bold shadow-md border-none">
+        <button
+          className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-xl font-bold shadow-md border-none"
+          onClick={() => window.location.href = '/profile'}
+        >
           SIGN IN
         </button>
       </div>
