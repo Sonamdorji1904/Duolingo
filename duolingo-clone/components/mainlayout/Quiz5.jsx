@@ -109,7 +109,7 @@ export default function Quiz5() {
                         {selected === correctIndex ? (
                             <span className="text-[#58cc02]">Correct!</span>
                         ) : (
-                            <span className="text-red-500">Try again!</span>
+                            <span className="text-red-500">Incorrect!</span>
                         )}
                     </div>
                 )}
