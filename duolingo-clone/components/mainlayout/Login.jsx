@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { X } from 'lucide-react';
+import { supabase } from '../../lib/supabaseClient'; // adjust path if needed
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
@@ -17,16 +18,17 @@ export default function LoginPage() {
             return;
         }
         try {
-            const res = await fetch('http://localhost:5000/api/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password }),
+            const { error } = await supabase.auth.signInWithPassword({
+                email,
+                password,
             });
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.error || 'Login failed');
-            router.push('/learn');
+            if (error) {
+                setError(error.message);
+            } else {
+                router.push('/learn');
+            }
         } catch (err) {
-            setError(err.message);
+            setError('An error occurred. Please try again.');
         }
     };
 
