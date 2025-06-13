@@ -192,12 +192,19 @@ export default function CreateProfilePage() {
 
   // Logged in: show the new profile UI
   return (
-    <div className="flex flex-col md:flex-row gap-8 p-8 bg-white min-h-screen">
+    <div className="flex flex-col md:flex-row gap-8 p-8 bg-white min-h-screen relative">
+      {/* Close Button */}
+      <button
+        onClick={() => router.push('/learn')}
+        className="absolute top-4 left-4 text-gray-400 hover:text-gray-600"
+      >
+        <X size={28} />
+      </button>
       {/* Profile Info */}
       <div className="flex-1 max-w-xl mx-auto">
         <div className="bg-gray-100 rounded-xl p-6 flex flex-col items-center">
           <img
-            src="/avatar.png" // Placeholder avatar image
+            src="/avatar.png"
             alt="Avatar"
             className="w-32 h-32 rounded-full mb-4 border-4 border-white shadow"
           />
