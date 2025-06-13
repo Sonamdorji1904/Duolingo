@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { supabase } from "../lib/supabaseClient";
 
 const menu = [
@@ -44,7 +44,7 @@ const menu = [
   },
 ];
 
-const moreDropdown = [
+const moreDropdownLoggedIn = [
   {
     label: "SCHOOLS",
     iconUrl: "/school.png",
@@ -56,10 +56,27 @@ const moreDropdown = [
   { label: "LOG OUT", path: "#", bold: false },
 ];
 
+const moreDropdownLoggedOut = [
+  { label: "SCHOOLS", iconUrl: "/school.png", path: "#", bold: false },
+  { label: "CREATE PROFILE", path: "/profile", bold: false },
+  { label: "SETTINGS", path: "#", bold: false },
+  { label: "HELP", path: "#", bold: false },
+  { label: "SIGN IN", path: "/login"},
+];
+
 export default function Sidebar() {
   const pathname = usePathname();
   const [showDropdown, setShowDropdown] = useState(false);
+  const [user, setUser] = useState(null);
   const dropdownTimeout = useRef();
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data } = await supabase.auth.getUser();
+      setUser(data.user ?? null);
+    };
+    getUser();
+  }, []);
 
   const handleMouseEnter = () => {
     clearTimeout(dropdownTimeout.current);
@@ -72,7 +89,7 @@ export default function Sidebar() {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    window.location.href = "/login"; // or use router.push('/login') if you prefer
+    window.location.href = "/login";
   };
 
   return (
@@ -83,6 +100,7 @@ export default function Sidebar() {
           const isActive = pathname === path;
 
           if (isMore) {
+            const dropdownOptions = user ? moreDropdownLoggedIn : moreDropdownLoggedOut;
             return (
               <div
                 key={label}
@@ -107,34 +125,55 @@ export default function Sidebar() {
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                   >
-                    {moreDropdown.map((item, idx) =>
-                      idx === 0 ? (
-                        <div
-                          key={item.label}
-                          className="flex items-center gap-2 px-4 py-3 border-b border-gray-200 font-bold text-gray-600"
-                        >
-                          <img src={item.iconUrl} alt={item.label} className="w-6 h-6" />
-                          <span>{item.label}</span>
-                        </div>
-                      ) : item.label === "LOG OUT" ? (
-                        <button
-                          key={item.label}
-                          onClick={handleLogout}
-                          className="w-full text-left px-4 py-3 text-gray-600 hover:bg-gray-100 cursor-pointer font-bold font-normal bg-transparent border-none outline-none"
-                        >
-                          {item.label}
-                        </button>
-                      ) : (
+                    {dropdownOptions.map((item, idx) => {
+                      // LOG OUT button for logged in
+                      if (item.label === "LOG OUT") {
+                        return (
+                          <button
+                            key={item.label}
+                            onClick={handleLogout}
+                            className="w-full text-left px-4 py-3 text-gray-600 hover:bg-gray-100 cursor-pointer font-bold font-normal bg-transparent border-none outline-none"
+                          >
+                            {item.label}
+                          </button>
+                        );
+                      }
+                      // SCHOOLS with icon
+                      if (item.label === "SCHOOLS" || item.label === "CREATE PROFILE") {
+                        return (
+                          <Link key={item.label} href={item.path}>
+                            <div
+                              className={`flex items-center gap-2 px-4 py-3 ${item.bold ? "font-bold" : "font-normal"} text-gray-600 ${idx === 0 ? "border-b border-gray-200" : ""} hover:bg-gray-100`}
+                            >
+                              {item.iconUrl && (
+                                <img src={item.iconUrl} alt={item.label} className="w-6 h-6" />
+                              )}
+                              <span>{item.label}</span>
+                            </div>
+                          </Link>
+                        );
+                      }
+                      // SIGN IN button for logged out
+                      if (item.label === "SIGN IN") {
+                        return (
+                          <Link key={item.label} href={item.path}>
+                            <div className="px-4 py-3 font-bold text-gray-600 hover:bg-gray-100">
+                              {item.label}
+                            </div>
+                          </Link>
+                        );
+                      }
+                      // Default
+                      return (
                         <Link key={item.label} href={item.path}>
                           <div
-                            className={`px-4 py-3 text-gray-600 hover:bg-gray-100 cursor-pointer font-bold ${item.bold ? "font-bold" : "font-normal"
-                              }`}
+                            className={`px-4 py-3 text-gray-600 hover:bg-gray-100 cursor-pointer ${item.bold ? "font-bold" : "font-normal"}`}
                           >
                             {item.label}
                           </div>
                         </Link>
-                      )
-                    )}
+                      );
+                    })}
                   </div>
                 )}
               </div>
